@@ -8,8 +8,8 @@ let
 
   cfg = config.microsoft-surface;
 
-  version = "6.4.14";
-  extraMeta.branch = "6.4";
+  version = "6.5.3";
+  extraMeta.branch = "6.4"; # XXX: Using 6.4 patches, yolo
   patchDir = repos.linux-surface + "/patches/${extraMeta.branch}";
   kernelPatches = pkgs.callPackage ./patches.nix {
     inherit (lib) kernel;
@@ -20,17 +20,17 @@ let
     inherit version extraMeta kernelPatches;
     src = fetchurl {
       url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
-      sha256 = "1rjh0jrn5qvxwzmyg478n08vckkld8r52nkc102ppqvsfhiy7skm";
+      hash = "sha256-TKwT97F72Nz5AyrWj5Ejq1MT1pjJ9ZQWBDFlFQdj608=";
     };
   };
 
 
 in {
   options.microsoft-surface.kernelVersion = mkOption {
-    type = types.enum [ "6.4.14" ];
+    type = types.enum [ "6.5.3" ];
   };
 
-  config = mkIf (cfg.kernelVersion == "6.4.14") {
+  config = mkIf (cfg.kernelVersion == "6.5.3") {
     boot = {
       inherit kernelPackages;
     };
